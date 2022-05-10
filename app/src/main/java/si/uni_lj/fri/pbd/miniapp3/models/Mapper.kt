@@ -1,8 +1,7 @@
 package si.uni_lj.fri.pbd.miniapp3.models
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import si.uni_lj.fri.pbd.miniapp3.database.entity.RecipeDetails
+import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipeDetailsDTO
 
 object Mapper {
 
