@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">MiniApp3</string>
+    <string name="spinner_item">Spinner String Item</string>
+
+    <!-- Layouts -->
+    <string name="splash_app_icon_description">App icon</string>
 
     <string name="favorite">Favorite</string>
     <string name="unfavorite">Unfavorite</string>
+
+    <!-- Toolbar -->
+    <string name="toolbar_tab_1">Search</string>
+    <string name="toolbar_tab_2">Favorites</string>
 </resources>
