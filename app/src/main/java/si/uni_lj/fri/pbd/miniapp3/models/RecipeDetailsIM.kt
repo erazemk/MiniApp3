@@ -4,166 +4,123 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 
-class RecipeDetailsIM : BaseObservable {
-    private var isFavorite: Boolean? = null
-    var idDrink: String? = null
+class RecipeDetailsIM(
+    private var isFavorite: Boolean?,
+    idDrink: String?,
+    strDrink: String?,
+    strCategory: String?,
+    strIBA: String?,
+    strInstructions: String?,
+    strDrinkThumb: String?,
+    strVideo: String?,
+    strIngredient1: String?,
+    strIngredient2: String?,
+    strIngredient3: String?,
+    strIngredient4: String?,
+    strIngredient5: String?,
+    strIngredient6: String?,
+    strIngredient7: String?,
+    strIngredient8: String?,
+    strIngredient9: String?,
+    strIngredient10: String?,
+    strIngredient11: String?,
+    strIngredient12: String?,
+    strIngredient13: String?,
+    strIngredient14: String?,
+    strIngredient15: String?,
+    strMeasure1: String?,
+    strMeasure2: String?,
+    strMeasure3: String?,
+    strMeasure4: String?,
+    strMeasure5: String?,
+    strMeasure6: String?,
+    strMeasure7: String?,
+    strMeasure8: String?,
+    strMeasure9: String?,
+    strMeasure10: String?,
+    strMeasure11: String?,
+    strMeasure12: String?,
+    strMeasure13: String?,
+    strMeasure14: String?,
+    strMeasure15: String?,
+    strImageSource: String?
+) : BaseObservable() {
+    var idDrink: String? = idDrink
         private set
-    var strDrink: String? = null
+    var strDrink: String? = strDrink
         private set
-    var strCategory: String? = null
+    var strCategory: String? = strCategory
         private set
-    var strIBA: String? = null
+    var strIBA: String? = strIBA
         private set
-    var strInstructions: String? = null
+    var strInstructions: String? = strInstructions
         private set
-    var strDrinkThumb: String? = null
+    var strDrinkThumb: String? = strDrinkThumb
         private set
-    var strVideo: String? = null
+    var strVideo: String? = strVideo
         private set
-    var strIngredient1: String? = null
+    var strIngredient1: String? = strIngredient1
         private set
-    var strIngredient2: String? = null
+    var strIngredient2: String? = strIngredient2
         private set
-    var strIngredient3: String? = null
+    var strIngredient3: String? = strIngredient3
         private set
-    var strIngredient4: String? = null
+    var strIngredient4: String? = strIngredient4
         private set
-    var strIngredient5: String? = null
+    var strIngredient5: String? = strIngredient5
         private set
-    var strIngredient6: String? = null
+    var strIngredient6: String? = strIngredient6
         private set
-    var strIngredient7: String? = null
+    var strIngredient7: String? = strIngredient7
         private set
-    var strIngredient8: String? = null
+    var strIngredient8: String? = strIngredient8
         private set
-    var strIngredient9: String? = null
+    var strIngredient9: String? = strIngredient9
         private set
-    var strIngredient10: String? = null
+    var strIngredient10: String? = strIngredient10
         private set
-    var strIngredient11: String? = null
+    var strIngredient11: String? = strIngredient11
         private set
-    var strIngredient12: String? = null
+    var strIngredient12: String? = strIngredient12
         private set
-    var strIngredient13: String? = null
+    var strIngredient13: String? = strIngredient13
         private set
-    var strIngredient14: String? = null
+    var strIngredient14: String? = strIngredient14
         private set
-    var strIngredient15: String? = null
+    var strIngredient15: String? = strIngredient15
         private set
-    var strMeasure1: String? = null
+    var strMeasure1: String? = strMeasure1
         private set
-    var strMeasure2: String? = null
+    var strMeasure2: String? = strMeasure2
         private set
-    var strMeasure3: String? = null
+    var strMeasure3: String? = strMeasure3
         private set
-    var strMeasure4: String? = null
+    var strMeasure4: String? = strMeasure4
         private set
-    var strMeasure5: String? = null
+    var strMeasure5: String? = strMeasure5
         private set
-    var strMeasure6: String? = null
+    var strMeasure6: String? = strMeasure6
         private set
-    var strMeasure7: String? = null
+    var strMeasure7: String? = strMeasure7
         private set
-    var strMeasure8: String? = null
+    var strMeasure8: String? = strMeasure8
         private set
-    var strMeasure9: String? = null
+    var strMeasure9: String? = strMeasure9
         private set
-    var strMeasure10: String? = null
+    var strMeasure10: String? = strMeasure10
         private set
-    var strMeasure11: String? = null
+    var strMeasure11: String? = strMeasure11
         private set
-    var strMeasure12: String? = null
+    var strMeasure12: String? = strMeasure12
         private set
-    var strMeasure13: String? = null
+    var strMeasure13: String? = strMeasure13
         private set
-    var strMeasure14: String? = null
+    var strMeasure14: String? = strMeasure14
         private set
-    var strMeasure15: String? = null
+    var strMeasure15: String? = strMeasure15
         private set
-    var strImageSource: String? = null
+    var strImageSource: String? = strImageSource
         private set
-
-    constructor(
-        isFavorite: Boolean?,
-        idDrink: String?,
-        strDrink: String?,
-        strCategory: String?,
-        strIBA: String?,
-        strInstructions: String?,
-        strDrinkThumb: String?,
-        strVideo: String?,
-        strIngredient1: String?,
-        strIngredient2: String?,
-        strIngredient3: String?,
-        strIngredient4: String?,
-        strIngredient5: String?,
-        strIngredient6: String?,
-        strIngredient7: String?,
-        strIngredient8: String?,
-        strIngredient9: String?,
-        strIngredient10: String?,
-        strIngredient11: String?,
-        strIngredient12: String?,
-        strIngredient13: String?,
-        strIngredient14: String?,
-        strIngredient15: String?,
-        strMeasure1: String?,
-        strMeasure2: String?,
-        strMeasure3: String?,
-        strMeasure4: String?,
-        strMeasure5: String?,
-        strMeasure6: String?,
-        strMeasure7: String?,
-        strMeasure8: String?,
-        strMeasure9: String?,
-        strMeasure10: String?,
-        strMeasure11: String?,
-        strMeasure12: String?,
-        strMeasure13: String?,
-        strMeasure14: String?,
-        strMeasure15: String?,
-        strImageSource: String?
-    ) {
-        this.isFavorite = isFavorite
-        this.idDrink = idDrink
-        this.strDrink = strDrink
-        this.strCategory = strCategory
-        this.strIBA = strIBA
-        this.strInstructions = strInstructions
-        this.strDrinkThumb = strDrinkThumb
-        this.strVideo = strVideo
-        this.strIngredient1 = strIngredient1
-        this.strIngredient2 = strIngredient2
-        this.strIngredient3 = strIngredient3
-        this.strIngredient4 = strIngredient4
-        this.strIngredient5 = strIngredient5
-        this.strIngredient6 = strIngredient6
-        this.strIngredient7 = strIngredient7
-        this.strIngredient8 = strIngredient8
-        this.strIngredient9 = strIngredient9
-        this.strIngredient10 = strIngredient10
-        this.strIngredient11 = strIngredient11
-        this.strIngredient12 = strIngredient12
-        this.strIngredient13 = strIngredient13
-        this.strIngredient14 = strIngredient14
-        this.strIngredient15 = strIngredient15
-        this.strMeasure1 = strMeasure1
-        this.strMeasure2 = strMeasure2
-        this.strMeasure3 = strMeasure3
-        this.strMeasure4 = strMeasure4
-        this.strMeasure5 = strMeasure5
-        this.strMeasure6 = strMeasure6
-        this.strMeasure7 = strMeasure7
-        this.strMeasure8 = strMeasure8
-        this.strMeasure9 = strMeasure9
-        this.strMeasure10 = strMeasure10
-        this.strMeasure11 = strMeasure11
-        this.strMeasure12 = strMeasure12
-        this.strMeasure13 = strMeasure13
-        this.strMeasure14 = strMeasure14
-        this.strMeasure15 = strMeasure15
-        this.strImageSource = strImageSource
-    }
 
     @Bindable
     fun getFavorite(): Boolean? {
@@ -259,5 +216,4 @@ class RecipeDetailsIM : BaseObservable {
         this.strMeasure15 = recipeDetails.strMeasure15
         this.strImageSource = recipeDetails.strImageSource
     }
-
 }
