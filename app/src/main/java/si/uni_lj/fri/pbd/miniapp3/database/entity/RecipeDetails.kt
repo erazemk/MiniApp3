@@ -1,10 +1,8 @@
 package si.uni_lj.fri.pbd.miniapp3.database.entity
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import androidx.room.*
-import com.bumptech.glide.Glide
-import si.uni_lj.fri.pbd.miniapp3.R
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity
 class RecipeDetails {
@@ -186,5 +184,4 @@ class RecipeDetails {
                 ", strImageSource='" + strImageSource + '\'' +
                 '}'
     }
-
 }
