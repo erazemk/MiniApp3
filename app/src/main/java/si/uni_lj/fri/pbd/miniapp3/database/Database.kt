@@ -10,7 +10,7 @@ import si.uni_lj.fri.pbd.miniapp3.database.entity.RecipeDetails
 @androidx.room.Database(entities = [RecipeDetails::class], version = 1, exportSchema = false)
 abstract class Database : RoomDatabase() {
 
-    abstract fun recipeDao() : RecipeDao
+    abstract fun recipeDao(): RecipeDao
 
     companion object {
         @Volatile
@@ -20,8 +20,10 @@ abstract class Database : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(Database::class.java) {
                     if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext,
-                            Database::class.java, Constants.DB_NAME)
+                        INSTANCE = Room.databaseBuilder(
+                            context.applicationContext,
+                            Database::class.java, Constants.DB_NAME
+                        )
                             .fallbackToDestructiveMigration()
                             .build()
                     }
