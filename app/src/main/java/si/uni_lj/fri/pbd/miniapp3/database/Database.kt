@@ -6,6 +6,8 @@ import androidx.room.RoomDatabase
 import si.uni_lj.fri.pbd.miniapp3.Constants
 import si.uni_lj.fri.pbd.miniapp3.database.dao.RecipeDao
 import si.uni_lj.fri.pbd.miniapp3.database.entity.RecipeDetails
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @androidx.room.Database(entities = [RecipeDetails::class], version = 1, exportSchema = false)
 abstract class Database : RoomDatabase() {
@@ -15,6 +17,7 @@ abstract class Database : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: Database? = null
+        val databaseWriteExecutor: ExecutorService = Executors.newFixedThreadPool(4)
 
         fun getDatabase(context: Context): Database? {
             if (INSTANCE == null) {
