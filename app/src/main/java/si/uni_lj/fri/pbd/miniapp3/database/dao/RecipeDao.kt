@@ -12,11 +12,11 @@ interface RecipeDao {
     @Insert
     fun insertRecipe(recipe: RecipeDetails)
 
-    @Query("SELECT * FROM RecipeDetails WHERE idDrink = :idDrink")
-    fun getRecipeById(idDrink: String?): RecipeDetails?
+    @Query("SELECT * FROM RecipeDetails WHERE idDrink = :recipeId")
+    fun findRecipe(recipeId: String): List<RecipeDetails>
 
-    @Query("DELETE FROM RecipeDetails WHERE idDrink = :idDrink")
-    fun deleteRecipe(idDrink: String?)
+    @Query("DELETE FROM RecipeDetails WHERE idDrink = :recipeId")
+    fun deleteRecipe(recipeId: String)
 
     @get:Query("SELECT * FROM RecipeDetails")
     val allRecipes: LiveData<List<RecipeDetails>>
