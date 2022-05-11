@@ -2,7 +2,7 @@ package si.uni_lj.fri.pbd.miniapp3.rest
 
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Query
 import si.uni_lj.fri.pbd.miniapp3.models.dto.IngredientsDTO
 import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipesByIdDTO
 import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipesByIngredientDTO
@@ -13,10 +13,13 @@ interface RestAPI {
     @get:GET("list.php?i=list")
     val allIngredients: Call<IngredientsDTO?>?
 
-    @GET("filter.php?i={ingredient}")
-    fun getByIngredient(@Path("ingredient") ingredient: String?): Call<RecipesByIngredientDTO?>?
+    @GET("filter.php?a=Non_Alcoholic")
+    fun getSemesterModeDrinks() : Call<RecipesByIdDTO>
 
-    @GET("lookup.php?i={id}")
-    fun getRecipeById(@Path("id") id: String?): Call<RecipesByIdDTO?>?
+    @GET("filter.php")
+    fun getByIngredient(@Query("i") ingredient: String?): Call<RecipesByIngredientDTO?>?
+
+    @GET("lookup.php")
+    fun getRecipeById(@Query("i") id: String?): Call<RecipesByIdDTO?>?
 
 }
