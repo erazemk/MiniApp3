@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import si.uni_lj.fri.pbd.miniapp3.R
 import si.uni_lj.fri.pbd.miniapp3.adapter.RecyclerViewAdapter
-import si.uni_lj.fri.pbd.miniapp3.database.entity.RecipeDetails
 import si.uni_lj.fri.pbd.miniapp3.databinding.FragmentFavoritesBinding
 import si.uni_lj.fri.pbd.miniapp3.models.FavoritesViewModel
 
@@ -19,11 +18,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private var favoritesViewModel: FavoritesViewModel? = null
-    private var adapter: RecyclerView.Adapter<*>? = null
-
-    // Get saved recipes from FavoritesViewModel
-    private var favorites: List<RecipeDetails> = listOf()
+    private var fViewModel: FavoritesViewModel? = null
+    private var recyclerAdapter: RecyclerViewAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,16 +37,24 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fViewModel = ViewModelProvider(this)[FavoritesViewModel::class.java]
+        observerSetup()
+        recyclerSetup()
+    }
 
-        favoritesViewModel = ViewModelProvider(this)[FavoritesViewModel::class.java]
-        favoritesViewModel?.allRecipes?.observe(viewLifecycleOwner) { recipes ->
-            favorites = recipes
+    private fun observerSetup() {
+        fViewModel?.favorites?.observe(viewLifecycleOwner) { favorites ->
+            recyclerAdapter?.setRecipes(favorites)
+            recyclerAdapter?.setCaller("FavoritesFragment")
         }
+    }
 
-        adapter = RecyclerViewAdapter(favorites)
-        val recyclerView = binding.recyclerView
+    private fun recyclerSetup() {
+        recyclerAdapter = RecyclerViewAdapter()
+
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = recyclerAdapter
     }
 
 }

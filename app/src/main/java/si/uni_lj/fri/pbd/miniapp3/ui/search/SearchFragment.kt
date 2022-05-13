@@ -65,7 +65,8 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         // Observer for drinks - recyclerView
         sViewModel?.searchResults?.observe(viewLifecycleOwner) { recipes ->
             Timber.d("Updated list of drinks")
-            recyclerAdapter?.setRecipes(recipes.drinks)
+            recyclerAdapter?.setRecipesFromDto(recipes.drinks)
+            recyclerAdapter?.setCaller("SearchFragment")
             progressBar?.visibility = View.INVISIBLE
         }
     }

@@ -13,7 +13,9 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import si.uni_lj.fri.pbd.miniapp3.R
-import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipeSummaryDTO
+import si.uni_lj.fri.pbd.miniapp3.database.entity.RecipeDetails
+import si.uni_lj.fri.pbd.miniapp3.models.Mapper
+import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipeDetailsDTO
 import si.uni_lj.fri.pbd.miniapp3.ui.DetailsActivity
 import java.io.InputStream
 import java.net.URL
@@ -30,11 +32,27 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
         }
     }
 
-    private var recipes: List<RecipeSummaryDTO>? = null
+    private var recipes: List<RecipeDetails>? = null
+    private var caller: String? = null
 
-    fun setRecipes(recipes: List<RecipeSummaryDTO>?) {
+    fun setRecipesFromDto(recipes: List<RecipeDetailsDTO>?) {
+        val recipesDetails = mutableListOf<RecipeDetails>()
+
+        recipes?.forEach {
+            recipesDetails.add(Mapper.mapRecipeDetailsDtoToRecipeDetails(it))
+        }
+
+        this.recipes = recipesDetails
+        notifyDataSetChanged()
+    }
+
+    fun setRecipes(recipes: List<RecipeDetails>?) {
         this.recipes = recipes
         notifyDataSetChanged()
+    }
+
+    fun setCaller(caller: String) {
+        this.caller = caller
     }
 
     override fun getItemCount(): Int {
@@ -64,7 +82,7 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
                 val activity = it.context as? AppCompatActivity
                 val intent = Intent(activity, DetailsActivity::class.java)
                     .putExtra("recipeId", recipes!![position].idDrink)
-                    .putExtra("caller", "SearchFragment")
+                    .putExtra("caller", caller)
                 activity?.startActivity(intent)
             }
         }

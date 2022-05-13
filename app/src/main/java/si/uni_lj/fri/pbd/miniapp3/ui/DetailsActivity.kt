@@ -59,12 +59,14 @@ class DetailsActivity : AppCompatActivity() {
             Timber.d("Clicked on favorites button, state=%b", recipe?.favorite)
             if (recipe?.favorite == false) { // Add to database
                 recipe?.favorite = true
-                dViewModel?.addRecipe(recipe!!)
+                Timber.d("Added recipe to favorites")
                 favoritesButton?.text = getString(R.string.unfavorite)
+                dViewModel?.addRecipe(recipe!!)
             } else { // Remove from database
                 recipe?.favorite = false
-                dViewModel?.removeRecipe(recipe!!)
+                Timber.d("Removed recipe from favorites")
                 favoritesButton?.text = getString(R.string.favorite)
+                dViewModel?.removeRecipe(recipe!!)
             }
         }
     }

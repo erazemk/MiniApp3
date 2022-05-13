@@ -7,6 +7,6 @@ class RecipesByIngredientDTO {
 
     @SerializedName("drinks")
     @Expose
-    val drinks: List<RecipeSummaryDTO>? = null
+    val drinks: List<RecipeDetailsDTO>? = null
 
 }
