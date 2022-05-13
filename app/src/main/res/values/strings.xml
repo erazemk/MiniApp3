@@ -11,4 +11,8 @@
     <!-- Toolbar -->
     <string name="toolbar_tab_1">Search</string>
     <string name="toolbar_tab_2">Favorites</string>
+
+    <!-- Favorites -->
+    <string name="recipe_name">Recipe name</string>
+    <string name="recipe_thumbnail">Recipe thumbnail</string>
 </resources>
