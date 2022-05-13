@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import si.uni_lj.fri.pbd.miniapp3.R
 import si.uni_lj.fri.pbd.miniapp3.adapter.RecyclerViewAdapter
 import si.uni_lj.fri.pbd.miniapp3.adapter.SpinnerAdapter
@@ -26,6 +27,7 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
     private var sViewModel: SearchViewModel? = null
     private var spinnerAdapter: SpinnerAdapter? = null
     private var recyclerAdapter: RecyclerViewAdapter? = null
+    private var progressBar: MaterialProgressBar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,8 +44,13 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        progressBar = binding.progressBar
+        progressBar?.visibility = View.INVISIBLE
+
         sViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         sViewModel?.getIngredients()
+
         observerSetup()
         recyclerSetup()
     }
@@ -59,6 +66,7 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         sViewModel?.searchResults?.observe(viewLifecycleOwner) { recipes ->
             Timber.d("Updated list of drinks")
             recyclerAdapter?.setRecipes(recipes.drinks)
+            progressBar?.visibility = View.INVISIBLE
         }
     }
 
@@ -77,8 +85,8 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         val spinner: Spinner = binding.spinner
         spinner.adapter = spinnerAdapter
 
-        // Testing before spinner works
-        sViewModel?.getRecipesByIngredient("Light rum")
+        // Prevent auto selecting first ingredient
+        //spinner.setSelection(spinner.selectedItemPosition, false)
 
         spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -88,6 +96,7 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
                 id: Long
             ) {
                 sViewModel?.getRecipesByIngredient(spinnerAdapter?.getItem(position) as String)
+                progressBar?.visibility = View.VISIBLE
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
