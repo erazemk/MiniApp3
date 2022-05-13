@@ -6,19 +6,16 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import si.uni_lj.fri.pbd.miniapp3.R
-import si.uni_lj.fri.pbd.miniapp3.models.dto.IngredientDTO
 import si.uni_lj.fri.pbd.miniapp3.models.dto.IngredientsDTO
 
-class SpinnerAdapter(ingredients: IngredientsDTO?) : BaseAdapter() {
-
-    private val ingredientList: List<IngredientDTO>? = ingredients?.ingredients
+class SpinnerAdapter(private val ingredients: IngredientsDTO) : BaseAdapter() {
 
     override fun getCount(): Int {
-        return ingredientList!!.size
+        return ingredients.ingredients?.size ?: 0
     }
 
-    override fun getItem(position: Int): Any {
-        return ingredientList!![position]
+    override fun getItem(position: Int): String? {
+        return ingredients.ingredients!![position].strIngredient1
     }
 
     override fun getItemId(position: Int): Long {
@@ -38,7 +35,7 @@ class SpinnerAdapter(ingredients: IngredientsDTO?) : BaseAdapter() {
             viewHolder = view.tag as Ingredient
         }
 
-        viewHolder.name.text = ingredientList!![position].strIngredient1
+        viewHolder.name.text = ingredients.ingredients!![position].strIngredient1
         return view
     }
 
