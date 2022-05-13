@@ -16,13 +16,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import si.uni_lj.fri.pbd.miniapp3.R
-import si.uni_lj.fri.pbd.miniapp3.database.entity.RecipeDetails
+import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipeSummaryDTO
 import si.uni_lj.fri.pbd.miniapp3.ui.DetailsActivity
 import timber.log.Timber
 import java.io.IOException
 import java.net.URL
 
-class RecyclerViewAdapter(var recipes: List<RecipeDetails>) :
+class RecyclerViewAdapter :
     RecyclerView.Adapter<RecyclerViewAdapter.CardViewHolder>() {
 
     inner class CardViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
@@ -36,6 +36,13 @@ class RecyclerViewAdapter(var recipes: List<RecipeDetails>) :
         }
     }
 
+    private var recipes: List<RecipeSummaryDTO>? = null
+
+    fun setRecipes(recipes: List<RecipeSummaryDTO>?) {
+        this.recipes = recipes
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         return CardViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.layout_grid_item, parent, false)
@@ -43,29 +50,26 @@ class RecyclerViewAdapter(var recipes: List<RecipeDetails>) :
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        val bitmap: Bitmap? = getBitmapFromUrl(recipes[position].strDrinkThumb!!)
+        val bitmap: Bitmap? = getBitmapFromUrl(recipes?.get(position)?.strDrinkThumb!!)
 
         holder.apply {
-            recipeId = recipes[position].idDrink
-            recipeName?.text = recipes[position].strDrink
+            recipeId = recipes?.get(position)?.idDrink
+            recipeName?.text = recipes?.get(position)?.strDrink
             recipeThumbnail?.setImageBitmap(bitmap)
 
             // Open DetailsActivity and pass the clicked drink's ID to it
             itemView.setOnClickListener {
                 val activity = it.context as? AppCompatActivity
                 val intent = Intent(activity, DetailsActivity::class.java)
-                    .putExtra("recipeId", recipes[position].idDrink)
+                    .putExtra("recipeId", recipes!![position].idDrink)
                 activity?.startActivity(intent)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        if (recipes.isEmpty()) {
-             // TODO: Print toast saying there are no items
-        }
-
-        return recipes.size
+        recipes ?: return 0
+        return recipes!!.size
     }
 
     private fun getBitmapFromUrl(url: String): Bitmap? {
