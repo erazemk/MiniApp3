@@ -64,6 +64,7 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
                 val activity = it.context as? AppCompatActivity
                 val intent = Intent(activity, DetailsActivity::class.java)
                     .putExtra("recipeId", recipes!![position].idDrink)
+                    .putExtra("caller", "SearchFragment")
                 activity?.startActivity(intent)
             }
         }

@@ -10,11 +10,10 @@ object Mapper {
     }
 
     fun mapRecipeDetailsDtoToRecipeDetails(
-        isFavorite: Boolean?,
         dto: RecipeDetailsDTO
     ): RecipeDetails {
         val aux = RecipeDetails()
-        aux.favorite = isFavorite
+        aux.favorite = dto.isFavorite
         aux.idDrink = dto.idDrink
         aux.strDrink = dto.strDrink
         aux.strVideo = dto.strVideo
@@ -57,11 +56,10 @@ object Mapper {
     }
 
     fun mapRecipeDetailsDtoToRecipeDetailsIm(
-        isFavorite: Boolean?,
         dto: RecipeDetailsDTO
     ): RecipeDetailsIM {
         return RecipeDetailsIM(
-            isFavorite,
+            dto.isFavorite,
             dto.idDrink,
             dto.strDrink,
             dto.strCategory,
@@ -104,11 +102,10 @@ object Mapper {
     }
 
     fun mapRecipeDetailsToRecipeDetailsIm(
-        isFavorite: Boolean?,
         rec: RecipeDetails
     ): RecipeDetailsIM {
         return RecipeDetailsIM(
-            isFavorite,
+            rec.favorite,
             rec.idDrink,
             rec.strDrink,
             rec.strCategory,

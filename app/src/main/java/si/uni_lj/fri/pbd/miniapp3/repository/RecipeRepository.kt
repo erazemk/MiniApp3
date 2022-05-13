@@ -9,8 +9,9 @@ import retrofit2.Response
 import si.uni_lj.fri.pbd.miniapp3.database.Database
 import si.uni_lj.fri.pbd.miniapp3.database.dao.RecipeDao
 import si.uni_lj.fri.pbd.miniapp3.database.entity.RecipeDetails
+import si.uni_lj.fri.pbd.miniapp3.models.Mapper
 import si.uni_lj.fri.pbd.miniapp3.models.dto.IngredientsDTO
-import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipeDetailsDTO
+import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipesByIdDTO
 import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipesByIngredientDTO
 import si.uni_lj.fri.pbd.miniapp3.rest.RestAPI
 import si.uni_lj.fri.pbd.miniapp3.rest.ServiceGenerator
@@ -18,10 +19,9 @@ import timber.log.Timber
 
 class RecipeRepository(application: Application) {
 
-    val searchResults = MutableLiveData<RecipesByIngredientDTO>()
-    val searchRecipeById = MutableLiveData<RecipeDetails>()
-    val favorites = MutableLiveData<List<RecipeDetailsDTO>>()
-    val allIngredients = MutableLiveData<IngredientsDTO>()
+    val searchRecipes = MutableLiveData<RecipesByIngredientDTO>()
+    val searchRecipe = MutableLiveData<RecipeDetails>()
+    val searchIngredients = MutableLiveData<IngredientsDTO>()
     val allRecipes: LiveData<List<RecipeDetails>>?
 
     private val recipeDao: RecipeDao?
@@ -50,20 +50,20 @@ class RecipeRepository(application: Application) {
 
     fun findRecipe(recipeId: String) {
         Database.databaseWriteExecutor.execute {
-            searchRecipeById.postValue(recipeDao?.findRecipe(recipeId))
+            searchRecipe.postValue(recipeDao?.findRecipe(recipeId))
         }
     }
 
     fun findRecipesByIngredient(ingredient: String?) {
         val call = apiService.getRecipesByIngredient(ingredient)
 
-        call?.enqueue(object: Callback<RecipesByIngredientDTO?> {
+        call?.enqueue(object : Callback<RecipesByIngredientDTO?> {
             override fun onResponse(
                 call: Call<RecipesByIngredientDTO?>,
                 response: Response<RecipesByIngredientDTO?>
             ) {
                 if (response.isSuccessful) {
-                    searchResults.postValue(response.body())
+                    searchRecipes.postValue(response.body())
                 } else {
                     Timber.d("Unsuccessful response to get drinks by ingredient")
                 }
@@ -75,17 +75,45 @@ class RecipeRepository(application: Application) {
         })
     }
 
+    fun findRecipeById(recipeId: String) {
+        val call = apiService.getRecipeById(recipeId)
+
+        call?.enqueue(object : Callback<RecipesByIdDTO?> {
+            override fun onResponse(
+                call: Call<RecipesByIdDTO?>,
+                response: Response<RecipesByIdDTO?>
+            ) {
+                if (response.isSuccessful) {
+                    val recipeDetailsDTO = response.body()?.drinks?.get(0)
+
+                    if (recipeDetailsDTO == null) {
+                        Timber.w("Empty response body")
+                    } else {
+                        val recipeDetails =
+                            Mapper.mapRecipeDetailsDtoToRecipeDetails(recipeDetailsDTO)
+                        searchRecipe.postValue(recipeDetails)
+                    }
+                } else {
+                    Timber.d("Unsuccessful response to get drinks by ingredient")
+                }
+            }
+
+            override fun onFailure(call: Call<RecipesByIdDTO?>, t: Throwable) {
+                Timber.d("Failed response to get drinks by ingredient")
+            }
+        })
+    }
+
     fun getIngredients() {
         val call = apiService.allIngredients
 
-        call.enqueue(object: Callback<IngredientsDTO?> {
+        call.enqueue(object : Callback<IngredientsDTO?> {
             override fun onResponse(
                 call: Call<IngredientsDTO?>,
                 response: Response<IngredientsDTO?>
             ) {
                 if (response.isSuccessful) {
-                    allIngredients.postValue(response.body())
-                    Timber.d("Posted value to allIngredients")
+                    searchIngredients.postValue(response.body())
                 } else {
                     Timber.d("Unsuccessful response to get all ingredients")
                 }
