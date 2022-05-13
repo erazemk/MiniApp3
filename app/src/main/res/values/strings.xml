@@ -15,4 +15,15 @@
     <!-- Favorites -->
     <string name="recipe_name">Recipe name</string>
     <string name="recipe_thumbnail">Recipe thumbnail</string>
+
+    <!-- Details -->
+    <string name="details_image_content">Cocktail image</string>
+    <string name="details_recipe_name">Recipe name</string>
+    <string name="details_ingredients_title">Ingredients list:</string>
+    <string name="details_ingredients">Ingredients</string>
+    <string name="details_measures_title">Measures list:</string>
+    <string name="details_measures">Measures</string>
+    <string name="details_instructions_title">Instructions:</string>
+    <string name="details_instructions">Instructions</string>
+    <string name="details_button_description">Favorites button</string>
 </resources>
