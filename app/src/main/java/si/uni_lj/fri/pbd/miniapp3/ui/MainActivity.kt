@@ -21,12 +21,14 @@ class MainActivity : AppCompatActivity() {
         val tabLayout = binding.tabLayout
         viewPager.adapter = SectionsPagerAdapter(supportFragmentManager, lifecycle)
 
+        setSupportActionBar(binding.toolbar)
+
         // Source: https://medium.com/busoft/how-to-use-viewpager2-with-tablayout-in-android-eaf5b810ef7c
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             if (position == 0) {
-                tab.text = R.string.toolbar_tab_1.toString()
+                tab.text = resources.getText(R.string.toolbar_tab_1)
             } else {
-                tab.text = R.string.toolbar_tab_2.toString()
+                tab.text = resources.getText(R.string.toolbar_tab_2)
             }
         }.attach()
     }
