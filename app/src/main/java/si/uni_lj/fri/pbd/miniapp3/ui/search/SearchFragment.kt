@@ -29,6 +29,8 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
     private var recyclerAdapter: RecyclerViewAdapter? = null
     private var progressBar: MaterialProgressBar? = null
 
+    private var selectedIngredient: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +55,12 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
 
         observerSetup()
         recyclerSetup()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            sViewModel?.getRecipesByIngredient(spinnerAdapter?.getItem(selectedIngredient) as String)
+            progressBar?.visibility = View.VISIBLE
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun observerSetup() {
@@ -96,6 +104,7 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
                 position: Int,
                 id: Long
             ) {
+                selectedIngredient = position
                 sViewModel?.getRecipesByIngredient(spinnerAdapter?.getItem(position) as String)
                 progressBar?.visibility = View.VISIBLE
             }
