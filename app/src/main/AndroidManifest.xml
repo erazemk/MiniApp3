@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.DetailsActivity" />
 
     </application>
 

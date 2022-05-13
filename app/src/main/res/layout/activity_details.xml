@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@+id/detailsImage" />
 
         <TextView
-            android:id="@+id/detailsIngredientsListTitle"
+            android:id="@+id/detailsIngredientsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -38,13 +38,13 @@
             app:layout_constraintTop_toBottomOf="@+id/detailsRecipeName" />
 
         <TextView
-            android:id="@+id/detailsIngredientsList"
+            android:id="@+id/detailsIngredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/details_ingredients"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailsIngredientsListTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/detailsIngredientsTitle" />
 
         <TextView
             android:id="@+id/detailsMeasuresTitle"
@@ -53,7 +53,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/details_measures_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailsIngredientsList" />
+            app:layout_constraintTop_toBottomOf="@+id/detailsIngredients" />
 
         <TextView
             android:id="@+id/detailsMeasures"
@@ -82,14 +82,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailsInstructionsTitle" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <Button
+            android:id="@+id/detailsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:clickable="true"
+            android:text="@string/favorite"
             android:contentDescription="@string/details_button_description"
-            android:src="@android:drawable/btn_star"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailsImage" />
 
