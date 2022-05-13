@@ -50,7 +50,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     }
 
     private fun recyclerSetup() {
-        recyclerAdapter = RecyclerViewAdapter()
+        recyclerAdapter = RecyclerViewAdapter(context)
 
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)

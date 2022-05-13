@@ -1,5 +1,8 @@
 package si.uni_lj.fri.pbd.miniapp3.ui.search
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +51,7 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
 
         progressBar = binding.progressBar
-        progressBar?.visibility = View.INVISIBLE
+        progressBar?.visibility = View.VISIBLE
 
         sViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         sViewModel?.getIngredients()
@@ -57,10 +60,22 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         recyclerSetup()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            sViewModel?.getRecipesByIngredient(spinnerAdapter?.getItem(selectedIngredient) as String)
             progressBar?.visibility = View.VISIBLE
+            sViewModel?.getRecipesByIngredient(spinnerAdapter?.getItem(selectedIngredient) as String)
             binding.swipeRefreshLayout.isRefreshing = false
         }
+
+        if (!isNetworkAvailable(context)) {
+            progressBar?.visibility = View.INVISIBLE
+            binding.noInternetText.visibility = View.VISIBLE
+        }
+    }
+
+    // Source: https://stackoverflow.com/questions/51141970/check-internet-connectivity-android-in-kotlin
+    private fun isNetworkAvailable(context: Context?): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
     }
 
     private fun observerSetup() {
@@ -80,7 +95,7 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
     }
 
     private fun recyclerSetup() {
-        recyclerAdapter = RecyclerViewAdapter()
+        recyclerAdapter = RecyclerViewAdapter(context)
 
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -104,9 +119,9 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
                 position: Int,
                 id: Long
             ) {
+                progressBar?.visibility = View.VISIBLE
                 selectedIngredient = position
                 sViewModel?.getRecipesByIngredient(spinnerAdapter?.getItem(position) as String)
-                progressBar?.visibility = View.VISIBLE
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

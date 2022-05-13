@@ -1,8 +1,11 @@
 package si.uni_lj.fri.pbd.miniapp3.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +23,7 @@ import si.uni_lj.fri.pbd.miniapp3.ui.DetailsActivity
 import java.io.InputStream
 import java.net.URL
 
-class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+class RecyclerViewAdapter(val context: Context?) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var recipeName: TextView
@@ -34,6 +37,13 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
 
     private var recipes: List<RecipeDetails>? = null
     private var caller: String? = null
+
+    // Source: https://stackoverflow.com/questions/51141970/check-internet-connectivity-android-in-kotlin
+    private fun isNetworkAvailable(context: Context?): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+    }
 
     fun setRecipesFromDto(recipes: List<RecipeDetailsDTO>?) {
         val recipesDetails = mutableListOf<RecipeDetails>()
@@ -66,13 +76,15 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val url = recipes!![position].strDrinkThumb
-        val deferredBitmap: Deferred<Bitmap> = CoroutineScope(Dispatchers.IO).async { getThumbnail(url) }
+        if (isNetworkAvailable(context)) {
+            val url = recipes!![position].strDrinkThumb
+            val deferredBitmap: Deferred<Bitmap> = CoroutineScope(Dispatchers.IO).async { getThumbnail(url) }
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val bitmap: Bitmap = deferredBitmap.await()
-            bitmap.apply {
-                holder.recipeThumbnail.setImageBitmap(bitmap)
+            CoroutineScope(Dispatchers.Main).launch {
+                val bitmap: Bitmap = deferredBitmap.await()
+                bitmap.apply {
+                    holder.recipeThumbnail.setImageBitmap(bitmap)
+                }
             }
         }
 

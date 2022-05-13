@@ -1,7 +1,10 @@
 package si.uni_lj.fri.pbd.miniapp3.ui
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -85,6 +88,13 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
+    // Source: https://stackoverflow.com/questions/51141970/check-internet-connectivity-android-in-kotlin
+    private fun isNetworkAvailable(context: Context?): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+    }
+
     private fun setLayout() {
         // Set favorites button based on state
         if (recipe!!.favorite == true) {
@@ -138,13 +148,15 @@ class DetailsActivity : AppCompatActivity() {
         recipeMeasures?.text = measures.joinToString(", ")
         recipeInstructions?.text = recipe!!.strInstructions
 
-        val deferredImage: Deferred<Bitmap> = CoroutineScope(Dispatchers.IO).async {
-            getImage(recipe!!.strDrinkThumb)
-        }
+        if (isNetworkAvailable(applicationContext)) {
+            val deferredImage: Deferred<Bitmap> = CoroutineScope(Dispatchers.IO).async {
+                getImage(recipe!!.strDrinkThumb)
+            }
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val bitmap: Bitmap = deferredImage.await()
-            bitmap.apply { imageView?.setImageBitmap(bitmap) }
+            CoroutineScope(Dispatchers.Main).launch {
+                val bitmap: Bitmap = deferredImage.await()
+                bitmap.apply { imageView?.setImageBitmap(bitmap) }
+            }
         }
     }
 
