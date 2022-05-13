@@ -56,15 +56,16 @@ class DetailsActivity : AppCompatActivity() {
         observerSetup()
 
         favoritesButton?.setOnClickListener {
-            Timber.d("Clicked on favorites button, state=%b", recipe?.favorite)
-            if (recipe?.favorite == false) { // Add to database
-                recipe?.favorite = true
+            val isFavorite = recipe?.favorite as Boolean
+            Timber.d("Clicked on favorites button, state=%b", isFavorite)
+            if (!isFavorite) { // Add to database
                 Timber.d("Added recipe to favorites")
+                recipe?.favorite = true
                 favoritesButton?.text = getString(R.string.unfavorite)
                 dViewModel?.addRecipe(recipe!!)
             } else { // Remove from database
-                recipe?.favorite = false
                 Timber.d("Removed recipe from favorites")
+                recipe?.favorite = false
                 favoritesButton?.text = getString(R.string.favorite)
                 dViewModel?.removeRecipe(recipe!!)
             }
@@ -73,14 +74,20 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun observerSetup() {
         dViewModel?.recipe?.observe(this) { recipe ->
+            // Initialize favorite value
+            if (recipe?.favorite == null) {
+                recipe?.favorite = false
+            }
+
             this.recipe = recipe
+            Timber.d("Is favorite: %b", this.recipe?.favorite)
             setLayout()
         }
     }
 
     private fun setLayout() {
         // Set favorites button based on state
-        if (recipe?.favorite == true) {
+        if (recipe!!.favorite == true) {
             favoritesButton?.text = getString(R.string.unfavorite)
         } else {
             favoritesButton?.text = getString(R.string.favorite)
