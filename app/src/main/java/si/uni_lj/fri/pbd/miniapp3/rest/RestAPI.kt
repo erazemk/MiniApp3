@@ -11,13 +11,13 @@ import si.uni_lj.fri.pbd.miniapp3.models.dto.RecipesByIngredientDTO
 interface RestAPI {
 
     @get:GET("list.php?i=list")
-    val allIngredients: Call<IngredientsDTO?>?
+    val allIngredients: Call<IngredientsDTO?>
 
     @GET("filter.php?a=Non_Alcoholic")
     fun getSemesterModeDrinks() : Call<RecipesByIdDTO>
 
     @GET("filter.php")
-    fun getByIngredient(@Query("i") ingredient: String?): Call<RecipesByIngredientDTO?>?
+    fun getRecipesByIngredient(@Query("i") ingredient: String?): Call<RecipesByIngredientDTO?>?
 
     @GET("lookup.php")
     fun getRecipeById(@Query("i") id: String?): Call<RecipesByIdDTO?>?
