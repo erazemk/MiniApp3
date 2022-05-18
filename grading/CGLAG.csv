@@ -1,0 +1,33 @@
+No.;QUESTION;ANSWER;WEIGHT;COMMENT (if grading 0 points)
+/;COMPILATION;;;
+1;The code compiled from the first try;1;1;
+2;The code did no compile initially, but was fixed with minor corrections / changes;0;-1;
+/;APP FUNCTIONALITY;;;
+3;Does the splash screen stay on for two seconds?;1;1;
+4;Does the MainActivity contain two tabs?;0;1;App is not implemented
+5;Does the SearchFragment contain a pre-populated Spinner allowing selection by the main ingredient?;0;2;App is not implemented
+6;Are recipes loaded when a user selects a main ingredient in the Spinner for which recipes exist in the database?;0;2;App is not implemented
+7;Are recipes shown in a RecyclerView?;0;1;App is not implemented
+8;Is the grid with recipes scrollable, in case the recipes do not fit the screen?;0;1;App is not implemented
+9;Is a title and a picture shown for each of the recipes in the RecyclerView?;0;1;App is not implemented
+10;Does the application reload recipes when you swipe the SearchFragment down?;0;1;App is not implemented
+11;Does selecting a recipe from the SearchFragment show a DetailsActivity with the details of the recipe? ;0;2;App is not implemented
+12;Does DetailsActivity show the picture, the ingredients, the measures, and the instructions for the recipe?;0;2;App is not implemented
+13;Does DetailsActivity allow a recipe to be selected as a favorite?;0;2;App is not implemented
+14;Does the FavoritesFragment tab show recipes that are selected as the favorites? [NOTE first select some recipes as favorites];0;2;App is not implemented
+15;"Does the FavoritesFragment show selected favorite recipes even when the connection is off [NOTE: first add some recipes from the SearchFragment to the favorites; Then, put the phone/emulator in the flight mode; then go to the FavoritesFragment]";0;2;App is not implemented
+16;Does clicking on a recipe in the FavoritesFragment open DetailsActivity showing the details of the recipe?;0;1;App is not implemented
+17;"Does the above work when the phone/device is offline? [NOTE: To test this, put the phone/emulator in the flight mode;]";0;2;App is not implemented
+18;Does DetailsActivity allow a recipe to be removed from a favorite? [NOTE: To test this, first add some recipes from the SearchFragment to the favorites];0;1;App is not implemented
+19;Does FavoritesFragment update the list of shown recipes after a recipe is removed from the favorites (marked as “not favorite” in DetailsActivity)?;0;2;App is not implemented
+20;"Does the above work when the phone/device is offline? [NOTE: To test this, put the phone/emulator in the flight mode;]";0;2;App is not implemented
+21;Are the recipes in the FavoritesFragment still there after closing and re-opening the app?;0;2;App is not implemented
+/;CODE INSPECTION;;;
+22;Does the app use Retrofit for RestAPI interaction?;0;1;App is not implemented
+23;Does the app store the data using the Room database?;0;1;App is not implemented
+24;Does the app use the ViewModel?;0;1;App is not implemented
+25;Does the application implement background querying for the Database? [NOTE: check the Database class and see whether “allowMainThreadQueries” is present - if not, and the FavoritesFragment works as expected, then the application uses background processing];0;1;App is not implemented
+/;BONUS TASK;;;
+26;Are ALL the functionalities stated in the Bonus task fully implemented?;0;5;App is not implemented
+General comments;[…];;;
+;Total score;0;;
